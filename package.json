@@ -1,0 +1,14 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "my home works",
+  "main": "notification.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "LumberJack",
+  "license": "ISC",
+  "dependencies": {
+    "node-notifier": "^10.0.1"
+  }
+}
