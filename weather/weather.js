@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import process from 'node:process';
 import { getAppParams } from './helpers/appHelpers.mjs';
+import { printHelp } from './services/log.service.mjs';
 
 const initCLI = () => {
 	const [firstArgument, secondArgument, ...rest] = process.argv;
@@ -15,7 +16,7 @@ const initCLI = () => {
 	}
 
 	if (appParams.h) {
-		console.log(appParams.h);
+		printHelp();
 	}
 
 	console.log('output weather');
