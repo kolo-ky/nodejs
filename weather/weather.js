@@ -8,8 +8,14 @@ import {
 } from './services/log.service.mjs';
 import { saveKeyValue } from './services/storage.service.mjs';
 import { APP_KEYS } from './helpers/constants.mjs';
+import { getWeather } from './services/api.service.mjs';
 
 const saveToken = async token => {
+	if (!token.length) {
+		printError('Не передан токен, используйте параметр -h для вызова справки');
+		return;
+	}
+
 	try {
 		await saveKeyValue(APP_KEYS.token, token);
 
@@ -35,7 +41,7 @@ const initCLI = () => {
 		printHelp();
 	}
 
-	console.log('output weather');
+	getWeather();
 };
 
 initCLI();

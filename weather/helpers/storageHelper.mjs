@@ -11,10 +11,12 @@ export const isExist = async path => {
 };
 
 export const getData = async path => {
+	let data = {};
+
 	if (await isExist(path)) {
 		const file = await promises.readFile(path);
-		return JSON.parse(file);
+		data = JSON.parse(file);
 	}
 
-	return {};
+	return data;
 };
