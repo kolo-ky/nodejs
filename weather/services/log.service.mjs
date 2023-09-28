@@ -5,7 +5,7 @@ import colors from 'colors';
 const { bgBlue, bgGreen, bgRed } = chalk;
 const { gray } = colors;
 
-export const printSuccess = ({ message }) => {
+export const printSuccess = message => {
 	console.log(`${bgGreen('SUCCESS')} ${message}`);
 };
 
