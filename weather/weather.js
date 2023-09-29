@@ -1,29 +1,10 @@
 #!/usr/bin/env node
 import process from 'node:process';
 import { getAppParams } from './helpers/appHelpers.mjs';
-import {
-	printHelp,
-	printSuccess,
-	printError,
-} from './services/log.service.mjs';
-import { saveKeyValue } from './services/storage.service.mjs';
-import { APP_KEYS, ERROR_CODE } from './helpers/constants.mjs';
+import { printHelp, printError } from './services/log.service.mjs';
+import { ERROR_CODE } from './helpers/constants.mjs';
 import { getWeather } from './services/api.service.mjs';
-
-const saveToken = async token => {
-	if (!token.length) {
-		printError('Не передан токен, используйте параметр -h для вызова справки');
-		return;
-	}
-
-	try {
-		await saveKeyValue(APP_KEYS.token, token);
-
-		printSuccess('Токен сохранен.');
-	} catch (error) {
-		printError(`Ошибка: ${error.message}`);
-	}
-};
+import { saveToken, saveCity } from './helpers/appHelpers.mjs';
 
 const getForCast = async () => {
 	try {
@@ -46,7 +27,7 @@ const initCLI = () => {
 	const appParams = getAppParams(rest);
 
 	if (appParams.c) {
-		console.log(appParams.c);
+		return saveCity(appParams.c);
 	}
 
 	if (appParams.t) {

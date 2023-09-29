@@ -1,4 +1,8 @@
 import { APP_PARAMS } from './constants.mjs';
+import { saveKeyValue } from '../services/storage.service.mjs';
+import { printSuccess, printError } from '../services/log.service.mjs';
+import { cityIsExist } from '../services/api.service.mjs';
+import { APP_KEYS } from '../helpers/constants.mjs';
 
 export const getAppParams = args => {
 	let params = {};
@@ -16,4 +20,29 @@ export const getAppParams = args => {
 	});
 
 	return params;
+};
+
+export const saveToken = async token => {
+	if (!token.length) {
+		printError('Не передан токен, используйте параметр -h для вызова справки');
+		return;
+	}
+
+	try {
+		await saveKeyValue(APP_KEYS.token, token);
+
+		printSuccess('Токен сохранен.');
+	} catch (error) {
+		printError(`Ошибка: ${error.message}`);
+	}
+};
+
+export const saveCity = async city => {
+	if (await cityIsExist(city)) {
+		await saveKeyValue(APP_KEYS.city, city);
+
+		printSuccess(`Город "${city}" сохранен.`);
+	} else {
+		printError(`Неверное название города: ${city}`);
+	}
 };
