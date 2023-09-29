@@ -7,7 +7,7 @@ import {
 	printError,
 } from './services/log.service.mjs';
 import { saveKeyValue } from './services/storage.service.mjs';
-import { APP_KEYS } from './helpers/constants.mjs';
+import { APP_KEYS, ERROR_CODE } from './helpers/constants.mjs';
 import { getWeather } from './services/api.service.mjs';
 
 const saveToken = async token => {
@@ -22,6 +22,22 @@ const saveToken = async token => {
 		printSuccess('Токен сохранен.');
 	} catch (error) {
 		printError(`Ошибка: ${error.message}`);
+	}
+};
+
+const getForCast = async () => {
+	try {
+		const weather = await getWeather();
+
+		console.log(weather);
+	} catch (error) {
+		if (error?.response?.status === ERROR_CODE.NOT_FOUND) {
+			printError('Неверно указан город');
+		} else if (error?.response?.status === ERROR_CODE.UNAUTHORIZED) {
+			printError('Неверно указан токен');
+		} else {
+			printError(error.message);
+		}
 	}
 };
 
@@ -41,7 +57,7 @@ const initCLI = () => {
 		printHelp();
 	}
 
-	getWeather();
+	getForCast();
 };
 
 initCLI();
