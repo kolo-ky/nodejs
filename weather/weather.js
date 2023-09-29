@@ -4,13 +4,13 @@ import { getAppParams } from './helpers/appHelpers.mjs';
 import { printHelp, printError } from './services/log.service.mjs';
 import { ERROR_CODE } from './helpers/constants.mjs';
 import { getWeather } from './services/api.service.mjs';
-import { saveToken, saveCity } from './helpers/appHelpers.mjs';
+import { saveToken, saveCity, printWeather } from './helpers/appHelpers.mjs';
 
 const getForCast = async () => {
 	try {
 		const weather = await getWeather();
 
-		console.log(weather);
+		printWeather(weather);
 	} catch (error) {
 		if (error?.response?.status === ERROR_CODE.NOT_FOUND) {
 			printError('Неверно указан город');

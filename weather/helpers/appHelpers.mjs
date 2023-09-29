@@ -1,7 +1,9 @@
+import dedent from 'dedent-js';
 import { APP_PARAMS } from './constants.mjs';
 import { saveKeyValue } from '../services/storage.service.mjs';
 import { printSuccess, printError } from '../services/log.service.mjs';
 import { cityIsExist } from '../services/api.service.mjs';
+import { weatherIcons } from './amoji.mjs';
 import { APP_KEYS } from '../helpers/constants.mjs';
 
 export const getAppParams = args => {
@@ -45,4 +47,15 @@ export const saveCity = async city => {
 	} else {
 		printError(`Неверное название города: ${city}`);
 	}
+};
+
+export const printWeather = weatherData => {
+	const [weatherDetails] = weatherData.weather;
+	const weatherIcon = weatherIcons[weatherDetails.main.toLowerCase()];
+
+	console.log(
+		dedent(`Сегодня в городе ${weatherData.name}: ${weatherIcon}  ${weatherDetails.description}.
+		Температура ${weatherData.main.temp}°C, ощущается как ${weatherData.main.feels_like}°C.
+		Скорость ветра ${weatherData.wind.speed} м/с.`)
+	);
 };
