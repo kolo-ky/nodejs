@@ -4,7 +4,12 @@ import { getAppParams } from './helpers/appHelpers.mjs';
 import { printHelp, printError } from './services/log.service.mjs';
 import { ERROR_CODE } from './helpers/constants.mjs';
 import { getWeather } from './services/api.service.mjs';
-import { saveToken, saveCity, printWeather } from './helpers/appHelpers.mjs';
+import {
+	saveToken,
+	saveCity,
+	printWeather,
+	saveLanguage,
+} from './helpers/appHelpers.mjs';
 
 const getForCast = async () => {
 	try {
@@ -32,6 +37,10 @@ const initCLI = () => {
 
 	if (appParams.t) {
 		return saveToken(appParams.t);
+	}
+
+	if (appParams.l) {
+		return saveLanguage(appParams.l);
 	}
 
 	if (appParams.h) {
